@@ -1,0 +1,528 @@
+.elements-panel {
+    width: 200px;
+    background: #ecf0f1;
+    padding: 1rem;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
+  }
+  
+  .elements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .element-item {
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .element-item:hover {
+    background: #f8f9fa;
+  }
+  
+  .element-item.dragging {
+    opacity: 0.5;
+  }
+  
+  .element-icon {
+    font-size: 1.2rem;
+  }
+  
+  .builder-canvas {
+    flex: 1;
+    position: relative;
+    background: #f9f9f9;
+    overflow: auto;
+    padding: 1rem;
+  }
+  
+  .builder-canvas.drop-active {
+    background: #e3f2fd;
+  }
+  
+  .empty-canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+    font-size: 1.2rem;
+  }
+  
+  .element {
+    position: absolute;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: move;
+    min-width: 100px;
+    min-height: 50px;
+  }
+  
+  .element.selected {
+    border: 2px solid #4285f4;
+    box-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
+  }
+  
+  .element.dragging {
+    opacity: 0.5;
+  }
+  
+  .element-controls {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
+  
+  .delete-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .properties-panel {
+    width: 300px;
+    background: white;
+    padding: 1rem;
+    border-left: 1px solid #ddd;
+    overflow-y: auto;
+  }
+  
+  .no-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .form-group textarea {
+    min-height: 80px;
+  }
+  
+  .element-type {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  @media (max-width: 768px) {
+    .builder-container {
+      flex-direction: column;
+    }
+    
+    .elements-panel {
+      width: 100%;
+      height: 100px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .elements-list {
+      flex-direction: row;
+    }
+    
+    .properties-panel {
+      width: 100%;
+      height: 200px;
+    }
+  }
+
+  /* Add these styles to your existing builder.css */
+.element-controls {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .control-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .delete-btn {
+    background: #ff4444;
+    color: white;
+  }
+  
+  .crop-btn {
+    background: #4285f4;
+    color: white;
+  }
+  
+  .element-drag-handle {
+    background: white;
+    border-radius: 4px;
+    padding: 2px 5px;
+    cursor: move;
+    font-size: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+  }
+  
+  .dimension-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .dimension-controls .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .ReactCrop__crop-selection {
+    border: 2px dashed #4285f4;
+  }
+  
+  .ReactCrop__drag-handle::after {
+    background: #4285f4;
+  }
+  
+  .rnd-container {
+    z-index: 1;
+  }
+  
+  .rnd-container.selected {
+    z-index: 2;
+  }
+
+  /* Add these styles to your existing builder.css */
+
+/* Base Styles */
+.element-container {
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .element-container.selected {
+    box-shadow: 0 0 0 2px var(--primary-color);
+    z-index: 100;
+  }
+  
+  .element {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .element:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  /* Element Controls */
+  .element-controls {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    display: flex;
+    gap: 6px;
+    background: white;
+    padding: 4px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  
+  .control-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    color: white;
+  }
+  
+  .control-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .delete-btn {
+    background: #ff4444;
+  }
+  
+  .crop-btn {
+    background: #4285f4;
+  }
+  
+  .element-drag-handle {
+    background: var(--primary-color);
+    color: white;
+    cursor: move;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .resize-handle {
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border: 2px solid white;
+    border-radius: 50%;
+    right: -6px;
+    bottom: -6px;
+  }
+  
+  /* Crop Controls */
+  .crop-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+  }
+  
+  .apply-crop-btn, .cancel-crop-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .apply-crop-btn {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  .cancel-crop-btn {
+    background: #f0f0f0;
+    color: #333;
+  }
+  
+  /* Properties Panel */
+  .properties-panel {
+    width: 300px;
+    background: white;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .properties-panel.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .panel-header {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .panel-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .panel-section {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .section-title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border 0.2s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  .number-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .number-input input {
+    text-align: center;
+    margin: 0 4px;
+  }
+  
+  .number-input button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .number-input button:hover {
+    background: #f5f5f5;
+  }
+  
+  .color-preview {
+    width: 100%;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  /* Color Picker Modal */
+  .color-picker-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .color-picker-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    position: relative;
+  }
+  
+  .close-picker-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 8px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .properties-panel {
+      width: 100%;
+      height: auto;
+      max-height: 50vh;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
